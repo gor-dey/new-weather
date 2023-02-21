@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
-// import { fromFront } from "./static/front.js";
+import bodyParser from "body-parser";
+// import fs from "fs";
 
 const __dirname = path.resolve();
 const app = express();
@@ -17,14 +18,21 @@ app.use(express.static(path.resolve(__dirname, "static")));
 
 // app.use(fromFront)
 
+app.use(bodyParser.json());
+
 app.post("/fromfront", (req, res) => {
-  console.log('From FE')
-  res.send( );
+  console.log(req.body);
+
+  res.send("Button works");
 });
 
+// app.post("/fromfront", (req, res) => {
+//   console.log("From FE");
 
-
-
+//   // const cityFromFe = JSON.parse(xhr.responseText);
+//   // console.log(cityFromFe)
+//   res.send();
+// });
 
 app.listen(`${PORT}`, () => {
   console.log(`gordey's weather program has started on port ${PORT}...`);
