@@ -7,20 +7,53 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
 }
 
-/* label {
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+input {
+  background-color: #fff;
+  height: 2rem;
+  border-radius: 10px;
+  border: #000 2px solid;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #fff;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10px;
+  border: #000 2px solid;
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+button:hover {
+  background-color: rgb(102, 102, 195);
+}
+
+label {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-} */
+  gap: 0.5rem;
+}
+
+.inputCityPlace {
+  padding: 0 0.5rem;  
+}
 
 .weather-card {
   margin: 0 auto;
 
   background-color: #f5f5f5;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   width: 300px;
   height: 350px;
@@ -28,6 +61,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  border: #000 2px solid;
+  box-sizing: border-box;
 }
 
 .loc {
@@ -50,7 +86,18 @@ body {
   margin-top: 20px;
 }
 
+.weather-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -5px;
+}
+
 img {
   width: 128px;
   height: 128px;
+}
+
+.refresh-btn {
+width: auto;
 }

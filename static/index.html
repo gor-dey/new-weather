@@ -4,30 +4,34 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./index.css" />
     <title>gordey's weather program</title>
   </head>
 
-  <label>
+
     <h1>weather will be there</h1>
 
 
   <label>
-    <input class="inputCityPlace" type="text" placeholder="write the name of the city">
-    <button class="inputCityBtn">GO!</button>
+    <input class="inputCityPlace" type="text" placeholder="write the name of the city" value="moscow">
+    <button class="inputCityBtn">GO</button>
   </label>
   
     <div class="weather-card">
-      <div class="loc">San Francisco, CA</div>
+      <div class="loc"> City</div>
       <div class="weather-icon">
-        <img
+        <img class="wind-img"
           src="https://cdn.iconscout.com/icon/free/png-256/cloudy-1695636-1442597.png"
-          alt="cloudy"
+          alt="wind speed"
         />
+        <p class="wind-speed-text">wind speed</p>
       </div>
-      <div class="temperature">64° F</div>
-      <div class="condition">Cloudy</div>
+      <div class="temperature">t°C</div>
+      <div class="condition">Condition</div>
     </div>
+    <button class="refresh-btn">Refresh</button>
+
 
     <script src="./front.js"></script>
   </body>
