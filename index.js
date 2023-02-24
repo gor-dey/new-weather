@@ -2,7 +2,8 @@ import express, { json, response } from "express";
 import path from "path";
 import bodyParser from "body-parser";
 import fs from "fs";
-import { XMLHttpRequest } from "xmlhttprequest";
+// import { sendToOpenWeatherMap } from "./middlewares/sendToOpenWeatherMap.js"
+import axios from "axios";
 
 // import { fromBEtoApi } from "./middlewares/fromBEtoApi.js";
 
@@ -19,8 +20,13 @@ app.use(express.static(path.resolve(__dirname, "static")));
 app.use(bodyParser.json());
 
 app.post("/fromfront", (req, res) => {
-  const city = req.body.city;
-  console.log(JSON.stringify(req.body));
+  if (req.body.city) {
+    var loco = `q=${req.body.city}`;
+  }
+  if (req.body.lat) {
+    var loco = `lat=${req.body.lat}&lon=${req.body.lon}`;
+  }
+  // const city = req.body.city;
 
   let keyJson = "";
   try {
@@ -36,45 +42,45 @@ app.post("/fromfront", (req, res) => {
 
     const apiKey = keyJson.apiKey;
     const units = keyJson.units;
+    const OwmUrl = `http://api.openweathermap.org/data/2.5/weather?${loco}&appid=${apiKey}&units=${units}`;
 
-    const xhr = new XMLHttpRequest();
-    const OwmUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
-
-    xhr.open("GET", OwmUrl, false);
-    xhr.onload = () => {
-      if (xhr.status != 200) {
-        throw console.error("Error");
-      } else {
-        resFromOWM = xhr.responseText;
-      }
-    };
-    xhr.send(OwmUrl);
+    axios.get(OwmUrl)
+    .then(function (response) {
+      resFromOWM = response.data;
+      return res.send(resFromOWM);
+    });
   }
   sendToOpenWeatherMap();
 
-  // ! creating new "city" for refreshing
-  fs.writeFile(cityJsonPath, JSON.stringify(req.body), (err) => {
-    if (err) {
-      throw err;
-    }
-  });
-
-  res.send(resFromOWM);
+  // res.send(resFromOWM);
 });
 
 app.listen(`${PORT}`, () => {
   console.log(`gordey's weather program has started on port ${PORT}...`);
 });
 
-// ! Refrefing
-app.post("/refreshfromfe", (req, res) => {
-  let city = "";
-  try {
-    const data = fs.readFileSync(cityJsonPath, "utf-8");
-    city = JSON.parse(data).city;
-  } catch (err) {
-    console.error(err);
+// * for forecast
+// * const OwmUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
+
+// ==========================>
+
+// ! chart weather
+
+// ==========================>
+
+app.post("/chartweather", (req, res) => {
+  // const city = req.body.city;
+
+  if (req.body.city) {
+    var loco = `q=${req.body.city}`;
   }
+  if (req.body.lat) {
+    var loco = `lat=${req.body.lat}&lon=${req.body.lon}`;
+  }
+  // * Why error evetry time?
+  // else {
+  //   throw Error
+  // }
 
   let keyJson = "";
   try {
@@ -86,33 +92,23 @@ app.post("/refreshfromfe", (req, res) => {
 
   //! we got city name from FE
   //! and now we're sending it to OpenWeatherMap (later 'Owm')
+
   function sendToOpenWeatherMap() {
+    // ! we got city name from FE
+    // ! and now we're sending it to OpenWeatherMap (later 'Owm')
+
     const apiKey = keyJson.apiKey;
     const units = keyJson.units;
+    const OwmUrl = `http://api.openweathermap.org/data/2.5/forecast?${loco}&appid=${apiKey}&units=${units}`;
 
-    const xhr = new XMLHttpRequest();
-    const OwmUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
-    
-
-    // * for forecast
-    // * const OwmUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
-
-
-    xhr.open("GET", OwmUrl, false);
-    xhr.onload = () => {
-      if (xhr.status != 200) {
-        throw console.error("Error");
-      } else {
-        resFromOWM = xhr.responseText;
-      }
-    };
-    xhr.send(OwmUrl);
+    axios.get(OwmUrl)
+    .then(function (response) {
+      resFromOWM = response.data;
+      return res.send(resFromOWM);
+    });
   }
+  
   sendToOpenWeatherMap();
 
   // fromBEtoApi(keyJson, city)
-
-  res.send(resFromOWM);
 });
-
-

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./index.css" />
     <title>gordey's weather program</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   </head>
 
 
@@ -14,8 +16,8 @@
 
 
   <label>
-    <input class="inputCityPlace" type="text" placeholder="write the name of the city" value="moscow">
-    <button class="inputCityBtn">GO</button>
+    <input class="inputCityPlace" type="text" placeholder="write the name of the city">
+    <button class="inputCityBtn">GO!</button>
   </label>
   
     <div class="weather-card">
@@ -33,6 +35,12 @@
     <button class="refresh-btn">Refresh</button>
 
 
+    <!-- <iframe src="./chart/chart.html" width="600" height="400" frameborder="0"></iframe> -->
+    <button class="weather">Weather forecast</button>
+<div style="width: 500px; height: 300px;">
+    <canvas  style="background-color: #fff; border: 2px #000 solid; border-radius: 10px;" id="myChart"></canvas>
+</div>
+  <!-- <script src="./chart/newchart.js"></script> -->
     <script src="./front.js"></script>
   </body>
 </html>

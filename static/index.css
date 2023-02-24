@@ -31,6 +31,7 @@ button {
   border: #000 2px solid;
   box-sizing: border-box;
   padding: 2px;
+  width: auto;
 }
 
 button:hover {
@@ -96,8 +97,4 @@ label {
 img {
   width: 128px;
   height: 128px;
-}
-
-.refresh-btn {
-width: auto;
 }
