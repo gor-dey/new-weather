@@ -41,7 +41,6 @@ const myChart = new Chart(ctx, {
   },
 });
 
-
 // ! declarating the localStorage var
 let storedCity = localStorage.getItem("storedCity");
 
@@ -158,18 +157,20 @@ weatherBtn.addEventListener("click", () => {
       // throw alert("Ooop... It is error!");
       throw Error;
     } else {
-      // console.log(JSON.parse(xhr.responseText))
-
       const actualRes = JSON.parse(xhr.responseText).list;
-      console.log(actualRes)
 
       let newData = [];
       let newTime = [];
       for (let i = 7; i < actualRes.length; i += 8) {
         newData.push(actualRes[i].main.temp);
-        newTime.push(new Date(actualRes[i].dt_txt).getDate()+'.'+(new Date(actualRes[i].dt_txt).getMonth()+1)+'.'+new Date(actualRes[i].dt_txt).getFullYear());
+        newTime.push(
+          new Date(actualRes[i].dt_txt).getDate() +
+            "." +
+            (new Date(actualRes[i].dt_txt).getMonth() + 1) +
+            "." +
+            new Date(actualRes[i].dt_txt).getFullYear()
+        );
       }
-
 
       myChart.config.data.labels = newTime;
       myChart.config.data.datasets[0].data = newData;
