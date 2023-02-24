@@ -1,11 +1,12 @@
+import * as dotenv from "dotenv";
+const apiKey = dotenv.config(process.env.apiKey).parsed.apiKey;
+
 import express, { json, response } from "express";
 import path from "path";
 import bodyParser from "body-parser";
 import fs from "fs";
-// import { sendToOpenWeatherMap } from "./middlewares/sendToOpenWeatherMap.js"
-import axios from "axios";
 
-// import { fromBEtoApi } from "./middlewares/fromBEtoApi.js";
+import axios from "axios";
 
 const __dirname = path.resolve();
 const app = express();
@@ -13,7 +14,6 @@ const PORT = process.env.PORT ?? 3000;
 
 let resFromOWM = "";
 const keyJsonPath = "./keys/key.json";
-const cityJsonPath = "./keys/lastCity.json";
 
 app.use(express.static(path.resolve(__dirname, "static")));
 
@@ -40,12 +40,10 @@ app.post("/fromfront", (req, res) => {
     // ! we got city name from FE
     // ! and now we're sending it to OpenWeatherMap (later 'Owm')
 
-    const apiKey = keyJson.apiKey;
     const units = keyJson.units;
     const OwmUrl = `http://api.openweathermap.org/data/2.5/weather?${loco}&appid=${apiKey}&units=${units}`;
 
-    axios.get(OwmUrl)
-    .then(function (response) {
+    axios.get(OwmUrl).then(function (response) {
       resFromOWM = response.data;
       return res.send(resFromOWM);
     });
@@ -97,17 +95,15 @@ app.post("/chartweather", (req, res) => {
     // ! we got city name from FE
     // ! and now we're sending it to OpenWeatherMap (later 'Owm')
 
-    const apiKey = keyJson.apiKey;
     const units = keyJson.units;
     const OwmUrl = `http://api.openweathermap.org/data/2.5/forecast?${loco}&appid=${apiKey}&units=${units}`;
 
-    axios.get(OwmUrl)
-    .then(function (response) {
+    axios.get(OwmUrl).then(function (response) {
       resFromOWM = response.data;
       return res.send(resFromOWM);
     });
   }
-  
+
   sendToOpenWeatherMap();
 
   // fromBEtoApi(keyJson, city)

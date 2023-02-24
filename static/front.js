@@ -68,11 +68,13 @@ inputCityBtn.addEventListener("click", () => {
     if (xhr.status != 200) {
       throw alert("Ooop... It is error!");
     } else {
-      const actualCity = JSON.parse(xhr.responseText).name;
-      const country = JSON.parse(xhr.responseText).sys.country;
-      const actualTemp = JSON.parse(xhr.responseText).main.temp;
-      const skyPurrity = JSON.parse(xhr.responseText).weather[0].main;
-      const windSpeed = JSON.parse(xhr.responseText).wind.speed;
+      const actualRes = JSON.parse(xhr.responseText);
+
+      const actualCity = actualRes.name;
+      const country = actualRes.sys.country;
+      const actualTemp = Math.floor(actualRes.main.temp);
+      const skyPurrity = actualRes.weather[0].main;
+      const windSpeed = actualRes.wind.speed;
 
       loc.textContent = `${actualCity}, ${country}`;
       temperature.textContent = `${actualTemp}`;
@@ -113,7 +115,7 @@ refreshBtn.addEventListener("click", () => {
 
       const actualCity = actualRes.name;
       const country = actualRes.sys.country;
-      const actualTemp = actualRes.main.temp;
+      const actualTemp = Math.floor(actualRes.main.temp);
       const skyPurrity = actualRes.weather[0].main;
       const windSpeed = actualRes.wind.speed;
 
