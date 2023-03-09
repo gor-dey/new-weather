@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import fs from "fs";
 
 import axios from "axios";
+import { error } from "console";
 
 const __dirname = path.resolve();
 const app = express();
@@ -43,10 +44,13 @@ app.post("/fromfront", (req, res) => {
     const units = keyJson.units;
     const OwmUrl = `http://api.openweathermap.org/data/2.5/weather?${loco}&appid=${apiKey}&units=${units}`;
 
-    axios.get(OwmUrl).then(function (response) {
-      resFromOWM = response.data;
-      return res.send(resFromOWM);
-    });
+    axios
+      .get(OwmUrl)
+      .then(function (response) {
+        resFromOWM = response.data;
+        return res.send(resFromOWM);
+      })
+      .catch((error) => res.send());
   }
   sendToOpenWeatherMap();
 
@@ -98,10 +102,13 @@ app.post("/chartweather", (req, res) => {
     const units = keyJson.units;
     const OwmUrl = `http://api.openweathermap.org/data/2.5/forecast?${loco}&appid=${apiKey}&units=${units}`;
 
-    axios.get(OwmUrl).then(function (response) {
-      resFromOWM = response.data;
-      return res.send(resFromOWM);
-    });
+    axios
+      .get(OwmUrl)
+      .then(function (response) {
+        resFromOWM = response.data;
+        return res.send(resFromOWM);
+      })
+      .catch((error) => res.send());
   }
 
   sendToOpenWeatherMap();
